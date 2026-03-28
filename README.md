@@ -2,28 +2,57 @@
 
 Gra na zaliczenie z Podstaw Informatyki
 
+## Building
 
+### Windows (Visual Studio)
 
-Jak uruchomić grę?:
+#### 1. Clone the repo
 
-<strong>WINDOWS:</strong>
+```
+git clone https://github.com/Werfer02/Impact-Bastion-cmake
+cd Impact-Bastion-Cmake
+```
 
-&nbsp;	1.Jeśli nie posiadasz zainstalowanego pakietu redystrybucyjnego Visual C++, to go zainstaluj.
+#### 2. Generate buildfiles with Cmake
+Make sure to specify the appropriate VS generator if you have not set it previously:
 
-&nbsp;	Możesz pobrać go z tej strony: https://learn.microsoft.com/pl-pl/cpp/windows/latest-supported-vc-redist?	view=msvc-170
+```
+cmake -S . -B build -G "Visual Studio 18 2026"
+```
 
-&nbsp;	2.Przejdź do folderu x64/Release i uruchom plik impact\_bastion.exe
+#### 3. Build with cmake
+Make sure to specify a build config (debug or release):
 
-<strong>LINUX:</strong>
+```
+cmake --build build --config debug
+```
+The built executable along with the required resources will be located in build/(whatever config you chose)/  
 
-&nbsp; 1. Przejdź do katalogu gry /impact_bastion/ i otwórz terminal w tym miejscu
+If it seems that the build directory is not visible but you have not encountered any errors in the build process, it is likely because newer versions of Visual Studio automatically hide any files listed in the .gitignore.  
+This can be disabled on most versions but if it can't on yours, you can just comment it out.
 
-&nbsp; 2. Zastosuj polecenie: 
+### Linux
 
-g++ *.cpp -o impact-bastion -std=c++17   -I../SFML-3.0.2/include   -L../SFML-3.0.2/lib   -Wl,-rpath,../SFML-3.0.2/lib   -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lsfml-network
+#### 1. Clone the repo
 
-&nbsp; Ewentualnie możesz uruchomić skrypt linux_compile.sh który zrobi to za ciebie
+```
+git clone https://github.com/Werfer02/Impact-Bastion-cmake
+cd Impact-Bastion-Cmake
+```
 
-&nbsp; 3. Uruchom program impact-bastion w eksploratorze albo poleceniem:
+#### 2. Generate buildfiles with Cmake
 
-./impact-bastion
+```
+cmake -S . -B build
+```
+
+#### 3. Build with cmake
+
+```
+cmake --build build
+```
+The built executable along with the required resources will be located in build/
+
+### Note for all builds
+
+Make sure the executable is run inside the directory it's located in or it won't be able to access the required resources

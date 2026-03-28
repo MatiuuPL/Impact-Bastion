@@ -1,5 +1,7 @@
 #include "Game.h"
 
+#include <algorithm>
+
 //Private functions
 void Game::initFonts() {
     if (!this->font.openFromFile("Roboto-Bold.ttf")) {
@@ -162,7 +164,7 @@ void Game::initText() {
 
 void Game::initAudio() {
     
-    if (!this->backgroundMusic.openFromFile("music1.mp3")) {
+    if (!this->backgroundMusic.openFromFile("audio/music1.mp3")) {
         std::cout << "ERROR: Can't load file music1.mp3" << std::endl;
     }
 
@@ -277,31 +279,31 @@ Game::Game()
     this->initEnemies();
     this->initPlayer();
 
-    if (!blockTextures[0].loadFromFile("../graphics/glass_redst.png"))
+    if (!blockTextures[0].loadFromFile("./graphics/glass_redst.png"))
         std::cout << "ERROR: glass_redst.png\n";
 
-    if (!blockTextures[1].loadFromFile("../graphics/wood_redst.png"))
+    if (!blockTextures[1].loadFromFile("./graphics/wood_redst.png"))
         std::cout << "ERROR: wood_redst.png\n";
 
-    if (!blockTextures[2].loadFromFile("../graphics/wood_b_redst.png"))
+    if (!blockTextures[2].loadFromFile("./graphics/wood_b_redst.png"))
         std::cout << "ERROR: wood_b_redst.png\n";
 
-    if (!blockTextures[3].loadFromFile("../graphics/stone_redst.png"))
+    if (!blockTextures[3].loadFromFile("./graphics/stone_redst.png"))
         std::cout << "ERROR: stone_redst.png\n";
 
-    if (!blockTextures[4].loadFromFile("../graphics/stone_b_redst.png"))
+    if (!blockTextures[4].loadFromFile("./graphics/stone_b_redst.png"))
         std::cout << "ERROR: stone_b_redst.png\n";
 
-    if (!blockTextures[5].loadFromFile("../graphics/stone_b2_redst.png"))
+    if (!blockTextures[5].loadFromFile("./graphics/stone_b2_redst.png"))
         std::cout << "ERROR: stone_b2_redst.png\n";
 
-    if (!enemyTextures[0].loadFromFile("../graphics/ball.png"))
+    if (!enemyTextures[0].loadFromFile("./graphics/ball.png"))
         std::cout << "ERROR: ball.png\n";
 
-    if (!enemyTextures[1].loadFromFile("../graphics/ball_b.png"))
+    if (!enemyTextures[1].loadFromFile("./graphics/ball_b.png"))
         std::cout << "ERROR: ball_b.png\n";
 
-    if (!enemyTextures[2].loadFromFile("../graphics/ball_b2.png"))
+    if (!enemyTextures[2].loadFromFile("./graphics/ball_b2.png"))
         std::cout << "ERROR: ball_b2.png\n";
     this->initBlocks();
     this->initAudio();
@@ -792,7 +794,7 @@ void saveScoreToFile(const std::string& name, int score) {
 
     //load contents of gameData/scores.txt into vector (each line starts from score then name)
     std::vector<std::pair<int, std::string>> scores;
-    std::ifstream inputFile("gameData/scores.txt");
+    std::ifstream inputFile("scores.txt");
     if (inputFile.is_open()) {
         std::string line;
         while (std::getline(inputFile, line)) {
@@ -812,7 +814,7 @@ void saveScoreToFile(const std::string& name, int score) {
         return a.first > b.first;
     });
     //keep only top 10 scores and write back to file
-    std::ofstream outputFile("gameData/scores.txt");
+    std::ofstream outputFile("scores.txt");
     if (outputFile.is_open()) {
         for (size_t i = 0; i < scores.size() && i < 10; ++i) {
             outputFile << scores[i].first << " " << scores[i].second << "\n";
@@ -876,7 +878,7 @@ void Game::endscreenUpdate() {
 
 void Game::loadStatsScreen() {
     //load scores from file
-    std::ifstream inputFile("gameData/scores.txt");
+    std::ifstream inputFile("scores.txt");
     std::string names;
     std::string points;
     if (inputFile.is_open()) {
